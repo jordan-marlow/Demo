@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Lead Status List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Lead Status List</h2>
+    <button class="btn btn-primary mt-3" hx-get="{% url 'emr:leadstatus_create' %}" hx-target="#target-dialog" hx-trigger="click">Add New Lead Status</button>
+    <div id="leadstatus-list" hx-get="{% url 'emr:leadstatus_list' %}" hx-trigger="load">
+        <!-- This will be replaced by the partial content -->
+    </div>
+</div>
+
+<div class="modal fade" id="leadstatus-modal">
+    <div class="modal-dialog" id="target-dialog" hx-target="this">
+        <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalElement = document.getElementById("leadstatus-modal");
+        const modal = new bootstrap.Modal(modalElement);
+        
+        htmx.on("htmx:afterSwap", (e) => {
+            // Show the modal when content is swapped in
+            if (e.detail.target.id === "target-dialog") {
+                modal.show();
+            }
+            modalElement.querySelectorAll('.close-modal-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        console.log('Close button clicked');
+                        modal.hide();
+                        childElement = modalElement.nextSibling
+                        childElement.innerHTML = `
+                            <div class="spinner-grow" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>`
+                    });
+                });
+        });
+
+        htmx.on("htmx:afterRequest", (e) => {
+            // Hide the modal after the request is completed
+            if (e.detail.target.id === "leadstatus-list") {
+                modal.hide();
+            }
+        });
+    });
+</script>
+{% endblock %}

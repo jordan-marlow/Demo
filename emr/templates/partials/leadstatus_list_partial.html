@@ -1,0 +1,29 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Created On</th>
+            <th>Modifed On</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.created_on }}</td>
+            <td>{{ object.modified_on }}</td>
+            <td>{{ object.active }}</td>
+            <td>
+                <button class="btn btn-warning btn-sm" hx-get="{% url 'emr:leadstatus_update' object.id %}" hx-target="#target-dialog" hx-trigger="click">Edit</button>
+                <button class="btn btn-danger btn-sm" hx-get="{% url 'emr:leadstatus_delete' object.id %}" hx-target="#target-dialog" hx-trigger="click">Delete</button>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No lead statuses found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

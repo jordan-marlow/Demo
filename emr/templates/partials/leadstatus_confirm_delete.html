@@ -1,0 +1,11 @@
+<form method="post" class="modal-content" hx-post="{% url 'emr:leadstatus_delete' object.pk %}" hx-target="#leadstatus-list" hx-swap="innerHTML" hx-include="[name=csrfmiddlewaretoken]" hx-on="htmx:afterRequest:#leadstatus-modal:hide.bs.modal">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="DELETE">
+    <div class="modal-body">
+        <p>Are you sure you want to delete this lead status?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary close-modal-btn">Close</button>
+    </div>
+</form>
