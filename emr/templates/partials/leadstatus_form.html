@@ -1,8 +1,21 @@
-<form method="post" class="modal-content" hx-post="{% if object.pk %}{% url 'emr:leadstatus_update' object.pk %}{% else %}{% url 'emr:leadstatus_create' %}{% endif %}" hx-target="#leadstatus-list" hx-swap="innerHTML" hx-on="htmx:afterRequest:#leadstatus-modal:hide.bs.modal">
-    {% csrf_token %}
-    {{ form.as_p }}
+<div class="modal-content">
+  <div class="modal-title">
+    {% if object.pk %} Edit Existing Lead Status {% else %} Create New Lead
+    Status {% endif %}
+  </div>
+  <form
+    method="post"
+    hx-post="{% if object.pk %}{% url 'emr:leadstatus_update' object.pk %}{% else %}{% url 'emr:leadstatus_create' %}{% endif %}"
+    hx-target="#leadstatus-list"
+    hx-swap="innerHTML"
+    hx-on="htmx:afterRequest:#leadstatus-modal:hide.bs.modal"
+  >
+    {% csrf_token %} {{ form.as_p }}
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-secondary close-modal-btn">Close</button>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-secondary close-modal-btn">
+        Close
+      </button>
     </div>
-</form>
+  </form>
+</div>
