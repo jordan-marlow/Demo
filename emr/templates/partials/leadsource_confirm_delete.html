@@ -1,7 +1,7 @@
 <div class="modal-content">
     <div class="modal-title" style="text-align: center;">
         <h3>
-            Delete Lead Status Label "{{ object.name }}"
+            Delete Lead Source Label "{{ object.name }}"
         </h3>
     </div>
     <form method="post" class="modal-content" hx-post="{% url 'emr:leadstatus_delete' object.pk %}" hx-target="#leadstatus-list" hx-swap="innerHTML" hx-include="[name=csrfmiddlewaretoken]" hx-on="htmx:afterRequest:#leadstatus-modal:hide.bs.modal">

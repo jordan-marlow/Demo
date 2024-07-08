@@ -1,14 +1,18 @@
 <div class="modal-content">
-  <div class="modal-title">
-    {% if object.pk %} Edit Existing Lead Status {% else %} Create New Lead
-    Status {% endif %}
+  <div class="modal-title" style="text-align: center;">
+    <h3>
+    {% if object.pk %} Edit Existing Lead Status Label {% else %} Create New Lead
+    Status Label {% endif %}
+    </h3>
   </div>
+  <hr class="hr" />
   <form
     method="post"
     hx-post="{% if object.pk %}{% url 'emr:leadstatus_update' object.pk %}{% else %}{% url 'emr:leadstatus_create' %}{% endif %}"
     hx-target="#leadstatus-list"
     hx-swap="innerHTML"
     hx-on="htmx:afterRequest:#leadstatus-modal:hide.bs.modal"
+    style="text-align: center;"
   >
     {% csrf_token %} {{ form.as_p }}
     <div class="modal-footer">
